@@ -27,7 +27,7 @@ namespace Vjezba_Ivan_Kocis
                     Console.WriteLine("<1> Parnost");
                     Console.WriteLine("<2> Kvadratna");
                     Console.WriteLine("<3> Prosjek");
-                    Console.WriteLine("<4> SumArray");
+                    Console.WriteLine("<4> Znamenke");
                     Console.WriteLine("<5> Loto");
                     Console.WriteLine("<6> Listić");
                     Console.WriteLine("<7> Osoba");
@@ -46,8 +46,8 @@ namespace Vjezba_Ivan_Kocis
                         case "D1": Parnost(); break;
                         case "D2": Kvadratna(); break;
                         case "D3": Prosjek(); break;
-                            /*  case "D4": SumArray(); break;
-                              case "D5": BeautifyString(); break;
+                        case "D4": Znamenke(); break;
+                          /*    case "D5": BeautifyString(); break;
                               case "D6": Random(); break;
                               case "D7": new UpisiOsobe().MainMenu(); break;
                               default:
@@ -69,10 +69,26 @@ namespace Vjezba_Ivan_Kocis
                 StartProgram();
             }
 
-            bool CheckIfNum(string input)
+            bool CheckIfDouble(string input)
             {
                 double num;
                 return double.TryParse(input, out num) ? true : false;
+            }
+
+            bool CheckIfInt(string input)
+            {
+                int num;
+                return int.TryParse(input, out num) ? true : false;
+            }
+
+            double ReturnDouble(string input)
+            {
+                double num;
+                if (!double.TryParse(input, out num))
+                {
+                    return 0;
+                }
+                return double.Parse(input);
             }
 
             void Parnost()
@@ -86,7 +102,7 @@ namespace Vjezba_Ivan_Kocis
                     Console.Write("Upiši broj: ");
                     input = Console.ReadLine();
 
-                } while (!CheckIfNum(input));
+                } while (!CheckIfDouble(input));
 
 
                 if (double.Parse(input) % 2 == 0)
@@ -114,29 +130,29 @@ namespace Vjezba_Ivan_Kocis
                 {
                     Console.WriteLine("Upiši prvi broj(a): ");
                     inputA = Console.ReadLine();
-                } while (!CheckIfNum(inputA));
+                } while (!CheckIfDouble(inputA));
 
                 do
                 {
                     Console.WriteLine("Upiši prvi broj(b): ");
                     inputB = Console.ReadLine();
-                } while (!CheckIfNum(inputB));
+                } while (!CheckIfDouble(inputB));
 
                 do
                 {
                     Console.WriteLine("Upiši prvi broj(c): ");
                     inputC = Console.ReadLine();
-                } while (!CheckIfNum(inputC));
+                } while (!CheckIfDouble(inputC));
 
-                double A = double.Parse(inputA);
-                double B = double.Parse(inputB);
-                double C = double.Parse(inputC);
+                double a = double.Parse(inputA);
+                double b = double.Parse(inputB);
+                double c = double.Parse(inputC);
 
                 double resultOne;
                 double resultTwo;
 
-                resultOne = ((-1 * B) + Math.Sqrt(B * B - 4 * A * C)) / 2 * A;
-                resultTwo = ((-1 * B) - Math.Sqrt(B * B - 4 * A * C)) / 2 * A;
+                resultOne = ((-1 * b) + Math.Sqrt(b * b - 4 * a * c)) / 2 * a;
+                resultTwo = ((-1 * b) - Math.Sqrt(b * b - 4 * a * c)) / 2 * a;
 
                 Console.WriteLine($"Rezultat prvi = {resultOne}");
                 Console.WriteLine($"Rezultat drugi = {resultTwo}");
@@ -154,7 +170,7 @@ namespace Vjezba_Ivan_Kocis
                 {
                     Console.Write("Upiši ocjenu 1-5 (decimalni ,): ");
                     input = Console.ReadLine();
-                    if (CheckIfNum(input))
+                    if (CheckIfDouble(input))
                     {
                         double inputNum = double.Parse(input);
                         if (inputNum >= 1 && inputNum <= 5)
@@ -198,7 +214,52 @@ namespace Vjezba_Ivan_Kocis
             }
 
 
-            MainMenu();
+
+            void Znamenke()
+            {
+                StartProgram();
+
+                Console.WriteLine("zbroj zadnjih znamenaka");
+                // koliko brojeva
+                string brojUnosaInput;
+                List<string> brojeviStr = new List<string>();
+                int zbroj = 0;
+
+                do
+                {
+                    Console.Write("unesi broj brojeva: ");
+                    brojUnosaInput = Console.ReadLine();
+                } while (!CheckIfInt(brojUnosaInput));
+
+                int brojUnosa = int.Parse(brojUnosaInput);
+
+                for (int i = 0; i < brojUnosa; i++)
+                {
+                    string input;
+                    do
+                    {
+                        Console.Write("unesi broj (dec ,): ");
+                        input = Console.ReadLine();
+                    } while (!CheckIfDouble(input));
+
+                    brojeviStr.Add(input);
+                    //brojevi.Add(double.Parse(input));
+                }
+
+                foreach (var broj in brojeviStr)
+                {
+                    Console.WriteLine($"{broj} -> {broj.Last()}");
+                    Console.WriteLine(int.Parse(broj.Last().ToString()));
+                    zbroj += int.Parse(broj.Last().ToString());
+                }
+
+                Console.WriteLine($"zbroj zadnjih znamenaka: {zbroj}");
+
+                EndProgram();
+            }
+
+            Znamenke();
+            //MainMenu();
         }
     }
 }
