@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
@@ -47,11 +48,11 @@ namespace Vjezba_Ivan_Kocis
                         case "D2": Kvadratna(); break;
                         case "D3": Prosjek(); break;
                         case "D4": Znamenke(); break;
-                            /*    case "D5": BeautifyString(); break;
-                                case "D6": Random(); break;
-                                case "D7": new UpisiOsobe().MainMenu(); break;
-                                default:
-                                    break;*/
+                        case "D5": Loto(); break;
+                        case "D6": Listic(); break;
+                            /*     case "D7": new UpisiOsobe().MainMenu(); break;
+                                 default:
+                                     break;*/
                     }
                 } while (keyPress.Key != ConsoleKey.Escape);
             }
@@ -223,7 +224,6 @@ namespace Vjezba_Ivan_Kocis
                 EndProgram();
             }
 
-
             void Znamenke()
             {
                 StartProgram();
@@ -267,7 +267,60 @@ namespace Vjezba_Ivan_Kocis
                 EndProgram();
             }
 
-            MainMenu();
+            void Loto()
+            {
+                List<int> lista = new List<int>();
+
+                for (int i = 0; i < 7; i++)
+                {
+                    int randomBroj = new Random().Next(1, 46);
+                    if (!lista.Contains(randomBroj))
+                    {
+                        lista.Add(randomBroj);
+                    }
+                }
+
+                // iza ove linije lista ima samo jedan element, kako to ?
+
+                foreach (int broj in lista)
+                {
+                    Console.WriteLine("broj:{0}", broj);
+                }
+                Console.WriteLine("broj elemenata: {0}", lista.Count());
+            }
+
+            void Listic()
+            {
+                int broj = 1;
+                string filePath = @"C:\Users\turpija\Documents\_source\CSharp_ConsoleApp_vjezba\listic.txt";
+
+                using (StreamWriter sw = new StreamWriter(filePath))
+                {
+                    sw.WriteLine("Listić za loto 6/49");
+
+                    for (int i = 1; i <= 7; i++)
+                    {
+                        for (int j = 1; j <= 7; j++)
+                        {
+                            if (broj < 10)
+                            {
+                                sw.Write($" {broj} ");
+                            }
+                            else
+                            {
+                                sw.Write($"{broj} ");
+                            }
+                            broj++;
+                        }
+
+                        sw.WriteLine();
+                    }
+                }
+            }
+
+
+            //Loto();
+            //MainMenu();
         }
     }
 }
