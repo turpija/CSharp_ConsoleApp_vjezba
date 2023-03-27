@@ -47,11 +47,11 @@ namespace Vjezba_Ivan_Kocis
                         case "D2": Kvadratna(); break;
                         case "D3": Prosjek(); break;
                         case "D4": Znamenke(); break;
-                          /*    case "D5": BeautifyString(); break;
-                              case "D6": Random(); break;
-                              case "D7": new UpisiOsobe().MainMenu(); break;
-                              default:
-                                  break;*/
+                            /*    case "D5": BeautifyString(); break;
+                                case "D6": Random(); break;
+                                case "D7": new UpisiOsobe().MainMenu(); break;
+                                default:
+                                    break;*/
                     }
                 } while (keyPress.Key != ConsoleKey.Escape);
             }
@@ -154,8 +154,18 @@ namespace Vjezba_Ivan_Kocis
                 resultOne = ((-1 * b) + Math.Sqrt(b * b - 4 * a * c)) / 2 * a;
                 resultTwo = ((-1 * b) - Math.Sqrt(b * b - 4 * a * c)) / 2 * a;
 
-                Console.WriteLine($"Rezultat prvi = {resultOne}");
-                Console.WriteLine($"Rezultat drugi = {resultTwo}");
+                double podKorjenom = b * b - 4 * a * c;
+
+                if (podKorjenom < 0)
+                {
+                    //Console.WriteLine("rezultat: {0}", podKorjenom);
+                    Console.WriteLine("Rezultat je kompleksan broj.");
+                }
+                else
+                {
+                    Console.WriteLine($"Rezultat prvi = {resultOne}");
+                    Console.WriteLine($"Rezultat drugi = {resultTwo}");
+                }
 
                 EndProgram();
             }
@@ -214,7 +224,6 @@ namespace Vjezba_Ivan_Kocis
             }
 
 
-
             void Znamenke()
             {
                 StartProgram();
@@ -258,8 +267,7 @@ namespace Vjezba_Ivan_Kocis
                 EndProgram();
             }
 
-            Znamenke();
-            //MainMenu();
+            MainMenu();
         }
     }
 }
