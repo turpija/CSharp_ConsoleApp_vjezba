@@ -50,9 +50,9 @@ namespace Vjezba_Ivan_Kocis
                         case "D4": Znamenke(); break;
                         case "D5": Loto(); break;
                         case "D6": Listic(); break;
-                            /*     case "D7": new UpisiOsobe().MainMenu(); break;
+                        case "D7": Osoba(); break;
                                  default:
-                                     break;*/
+                            break;
                     }
                 } while (keyPress.Key != ConsoleKey.Escape);
             }
@@ -170,6 +170,7 @@ namespace Vjezba_Ivan_Kocis
 
                 EndProgram();
             }
+
             void Prosjek()
             {
                 StartProgram();
@@ -269,31 +270,32 @@ namespace Vjezba_Ivan_Kocis
 
             void Loto()
             {
+                StartProgram();
                 List<int> lista = new List<int>();
 
                 Random rand = new Random();
-                for (int i = 0; i < 7; i++)
+
+                do
                 {
-                    //Task.Delay(300);
-                       int randomBroj = rand.Next(1, 46);
-                    Console.WriteLine("random broj: {0}",randomBroj);
+                    int randomBroj = rand.Next(1, 46);
+
                     if (!lista.Contains(randomBroj))
                     {
                         lista.Add(randomBroj);
                     }
-                }
-
-                // iza ove linije lista ima samo jedan element, kako to ?
+                } while (lista.Count < 7);
 
                 foreach (int broj in lista)
                 {
-                    Console.WriteLine("broj:{0}", broj);
+                    Console.Write($"{broj} ");
                 }
-                Console.WriteLine("broj elemenata: {0}", lista.Count());
+                Console.WriteLine();
+                EndProgram();
             }
 
             void Listic()
             {
+                StartProgram();
                 int broj = 1;
                 string filePath = @"C:\Users\turpija\Documents\_source\CSharp_ConsoleApp_vjezba\listic.txt";
 
@@ -312,6 +314,7 @@ namespace Vjezba_Ivan_Kocis
                             else
                             {
                                 sw.Write($"{broj} ");
+
                             }
                             broj++;
                         }
@@ -319,10 +322,15 @@ namespace Vjezba_Ivan_Kocis
                         sw.WriteLine();
                     }
                 }
+                Console.WriteLine($"ispisano u fajl: {filePath}");
+
+                EndProgram();
             }
 
             void Osoba()
             {
+                StartProgram();
+                Console.WriteLine("statiska osoba ...");
                 Osoba osoba = new Osoba();
 
                 List<Osoba> osobe = new List<Osoba>()
@@ -357,10 +365,10 @@ namespace Vjezba_Ivan_Kocis
                     Console.WriteLine($"prije 2000.g.: {o.Ime}, {o.Prezime}, {o.DOB.ToShortDateString()}");
 
                 }
+                EndProgram();
             }
 
-            Loto();
-            //MainMenu();
+            MainMenu();
         }
     }
 }
