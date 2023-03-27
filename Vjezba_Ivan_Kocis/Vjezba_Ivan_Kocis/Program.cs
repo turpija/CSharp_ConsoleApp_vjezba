@@ -271,9 +271,12 @@ namespace Vjezba_Ivan_Kocis
             {
                 List<int> lista = new List<int>();
 
+                Random rand = new Random();
                 for (int i = 0; i < 7; i++)
                 {
-                    int randomBroj = new Random().Next(1, 46);
+                    //Task.Delay(300);
+                       int randomBroj = rand.Next(1, 46);
+                    Console.WriteLine("random broj: {0}",randomBroj);
                     if (!lista.Contains(randomBroj))
                     {
                         lista.Add(randomBroj);
@@ -318,8 +321,45 @@ namespace Vjezba_Ivan_Kocis
                 }
             }
 
+            void Osoba()
+            {
+                Osoba osoba = new Osoba();
 
-            //Loto();
+                List<Osoba> osobe = new List<Osoba>()
+                {
+                    new Osoba() {Ime = "Pero",Prezime="Perić",DOB= new DateTime(2001,1,1),IsMale=true},
+                    new Osoba() {Ime = "Darko",Prezime="Draguljče",DOB= new DateTime(1988,1,1),IsMale=true},
+                    new Osoba() {Ime = "Marica",Prezime="Krvarica",DOB= new DateTime(1977,1,1),IsMale=false},
+                    new Osoba() {Ime = "Pepeljuga",Prezime="Pepeljkovičević",DOB= new DateTime(1966,1,1),IsMale=false},
+                    new Osoba() {Ime = "Snjeguljica",Prezime="Izgubljenka",DOB= new DateTime(1957,1,1),IsMale=false},
+                };
+
+                int brojMuskaraca = osobe.Where(s => s.IsMale == true).Count();
+                Console.WriteLine($"broj muškaraca u listi: {brojMuskaraca}");
+
+                int brojZena = osobe.Where(s => s.IsMale == false).Count();
+                Console.WriteLine($"broj žena u listi: {brojZena}");
+
+                foreach (var o in osobe)
+                {
+                    o.Age = DateTime.Now.Year - o.DOB.Year;
+                }
+
+                Osoba oldest = osobe.OrderBy(t => t.DOB).FirstOrDefault();
+                Console.WriteLine($"najstarija osoba: {oldest.Ime}, {oldest.Prezime}, {oldest.DOB.ToShortDateString()}");
+
+                Osoba youngest = osobe.OrderByDescending(t => t.DOB).FirstOrDefault();
+                Console.WriteLine($"najmlađa osoba: {youngest.Ime}, {youngest.Prezime}, {youngest.DOB.ToShortDateString()}");
+
+                IEnumerable<Osoba> prije2000 = osobe.Where(t => t.DOB.Year < 2000);
+                foreach (var o in prije2000)
+                {
+                    Console.WriteLine($"prije 2000.g.: {o.Ime}, {o.Prezime}, {o.DOB.ToShortDateString()}");
+
+                }
+            }
+
+            Loto();
             //MainMenu();
         }
     }
