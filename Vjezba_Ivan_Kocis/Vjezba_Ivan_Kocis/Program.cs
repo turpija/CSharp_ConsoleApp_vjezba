@@ -1,5 +1,9 @@
-﻿using System;
+﻿using PdfSharp.Drawing;
+using PdfSharp.Drawing.Layout;
+using PdfSharp.Pdf;
+using System;
 using System.Collections.Generic;
+using System.Data;
 using System.IO;
 using System.Linq;
 using System.Linq.Expressions;
@@ -19,11 +23,14 @@ namespace Vjezba_Ivan_Kocis
 
                 do
                 {
-                    Console.ForegroundColor = ConsoleColor.Cyan;
                     Console.WriteLine();
-                    Console.WriteLine("===========================");
-                    Console.WriteLine("           VJEŽBA          ");
-                    Console.WriteLine("===========================");
+                    Console.ForegroundColor = ConsoleColor.DarkGray;
+                    Console.WriteLine("======================================");
+                    Console.ForegroundColor = ConsoleColor.Cyan;
+                    Console.WriteLine("                 VJEŽBA               ");
+                    Console.ForegroundColor = ConsoleColor.DarkGray;
+                    Console.WriteLine("======================================");
+                    Console.ForegroundColor = ConsoleColor.Cyan;
                     Console.WriteLine();
                     Console.WriteLine("<1> Parnost");
                     Console.WriteLine("<2> Kvadratna");
@@ -33,12 +40,13 @@ namespace Vjezba_Ivan_Kocis
                     Console.WriteLine("<6> Listić");
                     Console.WriteLine("<7> Osoba");
                     Console.WriteLine("<8> Pdf");
-
-
+                    Console.ForegroundColor = ConsoleColor.DarkGray;
                     Console.WriteLine();
+                    Console.WriteLine("======================================");
+                    Console.ForegroundColor = ConsoleColor.Cyan;
                     Console.WriteLine("Type number of choice you wish to make");
                     Console.Write("(<Esc> to exit):");
-                    Console.ResetColor();
+                    //Console.ResetColor();
 
                     keyPress = Console.ReadKey();
 
@@ -51,6 +59,7 @@ namespace Vjezba_Ivan_Kocis
                         case "D5": Loto(); break;
                         case "D6": Listic(); break;
                         case "D7": Osoba(); break;
+                        case "D8": Pdf(); break;
                                  default:
                             break;
                     }
@@ -64,6 +73,7 @@ namespace Vjezba_Ivan_Kocis
 
             void EndProgram()
             {
+                Console.ForegroundColor = ConsoleColor.Cyan;
                 Console.WriteLine();
                 Console.Write("...press anykey to return to MainMenu...");
                 Console.ReadKey();
@@ -105,6 +115,7 @@ namespace Vjezba_Ivan_Kocis
 
                 } while (!CheckIfDouble(input));
 
+                Console.ForegroundColor = ConsoleColor.Yellow;
 
                 if (double.Parse(input) % 2 == 0)
                 {
@@ -156,6 +167,7 @@ namespace Vjezba_Ivan_Kocis
                 resultTwo = ((-1 * b) - Math.Sqrt(b * b - 4 * a * c)) / 2 * a;
 
                 double podKorjenom = b * b - 4 * a * c;
+                Console.ForegroundColor = ConsoleColor.Yellow;
 
                 if (podKorjenom < 0)
                 {
@@ -176,15 +188,15 @@ namespace Vjezba_Ivan_Kocis
                 StartProgram();
                 Console.WriteLine("Računanje prosjeka ocjena ");
                 string input;
-                List<double> numbers = new List<double>();
+                List<int> numbers = new List<int>();
 
                 do
                 {
-                    Console.Write("Upiši ocjenu 1-5 (decimalni ,): ");
+                    Console.Write("Upiši ocjenu 1-5: ");
                     input = Console.ReadLine();
-                    if (CheckIfDouble(input))
+                    if (CheckIfInt(input))
                     {
-                        double inputNum = double.Parse(input);
+                        int inputNum = int.Parse(input);
                         if (inputNum >= 1 && inputNum <= 5)
                         {
                             numbers.Add(inputNum);
@@ -198,6 +210,7 @@ namespace Vjezba_Ivan_Kocis
                 } while (input != "0");
 
                 double prosjek = numbers.Average();
+                Console.ForegroundColor = ConsoleColor.Yellow;
 
                 Console.WriteLine($"Prosječna ocjena liste je: {prosjek}");
 
@@ -255,6 +268,7 @@ namespace Vjezba_Ivan_Kocis
                     brojeviStr.Add(input);
                     //brojevi.Add(double.Parse(input));
                 }
+                Console.ForegroundColor = ConsoleColor.Yellow;
 
                 foreach (var broj in brojeviStr)
                 {
@@ -268,7 +282,7 @@ namespace Vjezba_Ivan_Kocis
                 EndProgram();
             }
 
-            void Loto()
+            List<int> Loto()
             {
                 StartProgram();
                 List<int> lista = new List<int>();
@@ -285,23 +299,37 @@ namespace Vjezba_Ivan_Kocis
                     }
                 } while (lista.Count < 7);
 
+                lista.Sort();
+
+                Console.ForegroundColor = ConsoleColor.Yellow;
+
+
                 foreach (int broj in lista)
                 {
                     Console.Write($"{broj} ");
                 }
                 Console.WriteLine();
                 EndProgram();
+                return lista;
             }
 
             void Listic()
             {
                 StartProgram();
                 int broj = 1;
-                string filePath = @"C:\Users\turpija\Documents\_source\CSharp_ConsoleApp_vjezba\listic.txt";
+
+                //laptop
+                //string filePath = @"C:\Users\turpija\Documents\_source\CSharp_ConsoleApp_vjezba\listic.txt";
+                
+                //home
+                string filePath = @"C:\Users\ivan\Documents\_source\CSharp_ConsoleApp_vjezba\listic.txt";
+
 
                 using (StreamWriter sw = new StreamWriter(filePath))
                 {
-                    sw.WriteLine("Listić za loto 6/49");
+                    sw.WriteLine("+-----------------------------------------+");
+                    sw.WriteLine("|            Listić za loto 6/49          |");
+                    sw.WriteLine("+-----+-----+-----+-----+-----+-----+-----+");
 
                     for (int i = 1; i <= 7; i++)
                     {
@@ -309,19 +337,22 @@ namespace Vjezba_Ivan_Kocis
                         {
                             if (broj < 10)
                             {
-                                sw.Write($" {broj} ");
+                                sw.Write($"|  {broj}  ");
                             }
                             else
                             {
-                                sw.Write($"{broj} ");
+                                sw.Write($"| {broj}  ");
 
                             }
                             broj++;
                         }
-
+                        sw.Write("|");
                         sw.WriteLine();
+                        sw.WriteLine("+-----+-----+-----+-----+-----+-----+-----+");
                     }
                 }
+                Console.ForegroundColor = ConsoleColor.Yellow;
+
                 Console.WriteLine($"ispisano u fajl: {filePath}");
 
                 EndProgram();
@@ -353,6 +384,8 @@ namespace Vjezba_Ivan_Kocis
                     o.Age = DateTime.Now.Year - o.DOB.Year;
                 }
 
+                Console.ForegroundColor = ConsoleColor.Yellow;
+
                 Osoba oldest = osobe.OrderBy(t => t.DOB).FirstOrDefault();
                 Console.WriteLine($"najstarija osoba: {oldest.Ime}, {oldest.Prezime}, {oldest.DOB.ToShortDateString()}");
 
@@ -365,6 +398,35 @@ namespace Vjezba_Ivan_Kocis
                     Console.WriteLine($"prije 2000.g.: {o.Ime}, {o.Prezime}, {o.DOB.ToShortDateString()}");
 
                 }
+                EndProgram();
+            }
+
+            void Pdf()
+            {
+                StartProgram();
+                var lista =  Loto();
+                string listaStr = string.Join(" ", lista);
+                string filePath = @"C:\Users\ivan\Documents\_source\CSharp_ConsoleApp_vjezba\loto.pdf";
+
+                PdfDocument document = new PdfDocument();
+                PdfPage page = document.AddPage();
+                XGraphics graphics = XGraphics.FromPdfPage(page);
+                XFont naslovFont = new XFont("Verdana", 10);
+
+                double margin = 30;
+                XPen pen = new XPen(XColors.Orange, 1);
+
+                XRect naslovOkvir = new XRect(margin, margin, page.Width - margin * 2, page.Height * 0.2 - margin * 2);
+                graphics.DrawRectangle(pen, naslovOkvir);
+
+                XTextFormatter tekst = new XTextFormatter(graphics);
+                tekst.DrawString("Izvučeni brojevi: \n"+listaStr, naslovFont, XBrushes.Black, naslovOkvir);
+
+                document.Save(filePath);
+
+                Console.ForegroundColor = ConsoleColor.Yellow;
+                Console.WriteLine("ispisano u {0}", filePath);
+
                 EndProgram();
             }
 
